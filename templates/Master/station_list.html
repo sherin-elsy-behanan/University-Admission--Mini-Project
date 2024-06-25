@@ -1,0 +1,54 @@
+
+{% extends "Master/header_adm.html" %}
+{% block content %}
+{% load static %}
+
+
+<div id="page-wrapper">
+    <div class="main-page">
+        <div class="forms">
+
+            <h3 class="title1">EV Charging Station List</h3>
+            {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+              <div class="alert alert-success"> {{message }}</div>
+              {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="col-sm-12" style="margin-top: 10px;">
+    <div class="form-title">
+                    <h4>Station List :</h4>
+                </div>
+
+    <table class="table table-striped table-bordered">
+      <thead><th>Id</th><th>Place</th><th>Longitude</th><th>Latitude</th><th>Added date</th><th>State</th><th>District</th></thead>
+
+      {%  for k in data  %}
+
+        <tr>
+
+
+          <td>{{forloop.counter}}</td>
+              <td>{{k.2}}</td>
+              <td>{{k.3}}</td>
+              <td>{{k.4}}</td>
+              <td>{{k.5}}</td>
+              <td>{{k.6}}</td>
+              <td>{{k.7}}</td>
+           
+              <td><a href="/ad_map/{{k.0}}" target="_blank" class="btn btn-success">Google map</a></td>
+              <td><a href="/edit_station/{{k.0}}" class="btn btn-info">Edit</a></td>
+              <td><a href="/delete_station/{{k.0}}" onclick="return ConfirmDialog();" class="btn btn-danger">Delete</a></td>
+          </tr>
+
+          {% endfor  %}
+    </table>
+            </div>
+            <div class="row">
+
+        </div>
+    </div>
+</div>
+<!--footer-->
+{% endblock %}

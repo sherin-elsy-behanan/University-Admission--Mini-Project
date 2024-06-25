@@ -1,0 +1,158 @@
+ 
+{% extends "College/header_adm.html" %}
+{% block content %}
+{% load static %}
+
+
+<div id="page-wrapper">
+    <div class="main-page">
+        <div class="forms">
+
+            <h3 class="title1">Hostel Details</h3>
+
+            <div class="col-sm-12" style="margin-top: 10px;">
+    <div class="form-title">
+                    <h4>Add New Hostel :</h4>
+                </div>
+       
+                
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                  <div class="alert alert-success"> {{message }}</div>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <div class="col-sm-6">
+                <form method="post" action="/save_hostel/" method="post" id="myform" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label> Total seat</label>
+                        <input name="total_seat" type="text" class="form-control">
+                   </div>
+                   <div class="form-group">
+                    <label> Seat Availability</label>
+                    <input name="seat_availablity" id="seat_availablity"  type="text" class="form-control">
+               </div>
+                   <div class="form-group">
+                         <label>Address</label>
+                       <textarea name="address"  class="form-control"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label> Phone Number</label>
+                    <input name="phone_number" type="text" class="form-control">
+               </div>
+               <div class="form-group">
+                <label>Rules</label>
+              <textarea name="rules"  class="form-control"></textarea>
+         </div>
+         <div class="form-group">
+            <label>Hostel Type</label>
+         <select name="hostel_type"  class="form-control">
+            <option value="">--Select--</option>
+            <option value="Boys Hostel">Boys Hostel</option>
+            <option value="Girls Hostel">Girls Hostel</option>
+         </select>
+     </div>
+              <div class="col-sm-12"  style="text-align: center;"><div>
+                <input type="submit" value="Submit" class="btn btn-info">
+      </div></div>
+           </form>
+    </div>
+    
+                               <script src="{% static 'assets/Validation/jquery_validate.js' %}"></script>
+                               <script src="{% static 'assets/Validation/additional_validate.js' %}"></script>
+       <script>
+           (function ($, W, D)
+         {
+         var JQUERY4U = {};
+         JQUERY4U.UTIL =
+             {
+                 setupFormValidation: function ()
+                 {
+                   $.validator.addMethod(
+           "regex",
+           function(value, element, regexp) {
+               var check = false;
+               return this.optional(element) || regexp.test(value);
+           },
+           "Not a valid Input."
+       );
+       $.validator.addMethod("greaterThan",
+    function (value, element, param) {
+          var $otherElement = $(param);
+          return parseInt(value, 10) > parseInt($otherElement.val(), 10);
+    });
+
+    
+                 //form validation rules
+                 $("#myform").validate({
+                   rules: {
+    
+                    total_seat: {
+    
+                                           required: true,
+                                         digits:true,
+                                         greaterThan: "#seat_availablity"
+                                       },
+                                       seat_availablity: {
+    
+    required: true,
+  digits:true,
+  
+},
+address: {
+    
+                                           required: true,
+                                         regex :/^[a-zA-Z, ]+$/,
+                                         minlength: 3,
+                                         maxlength:150,
+    
+                                       },
+                                       rules: {
+    
+    required: true,
+  regex :/^[a-zA-Z, ]+$/,
+  minlength: 3,
+  maxlength:500,
+
+},
+phone_number: {
+		required: true,
+		digits:true,
+		   minlength: 10,
+		   maxlength: 10,
+		   regex : /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/
+	},
+    hostel_type:
+    {
+        required: true,   
+    }
+                                     },
+                                     
+                                     messages: {
+    
+                                        total_seat:"Total seat must be greater than or equal to seat availablity"
+    
+                     },
+                     submitHandler: function (form) {
+                     form.submit();
+                     }
+                 });
+               }
+             }
+         //when the dom has loaded setup form validation rules
+         $(D).ready(function ($) {
+             JQUERY4U.UTIL.setupFormValidation();
+         });
+         })(jQuery, window, document);
+       </script>
+                                    </div></div>
+
+            </div>
+            
+    </div>
+</div>
+<!--footer-->
+{% endblock %}
+              

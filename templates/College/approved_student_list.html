@@ -1,0 +1,77 @@
+
+{% extends "College/header_adm.html" %}
+{% block content %}
+{% load static %}
+
+
+<div id="page-wrapper">
+    <div class="main-page">
+        <div class="forms">
+
+            <h3 class="title1">Approved Applications</h3>
+
+            <div class="col-sm-12" style="margin-top: 10px;">
+    <div class="form-title">
+                    <h4>View List :</h4>
+                </div>
+       
+                
+                {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                              <div class="alert alert-success"> {{message }}</div>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            {% if data %}
+                            <div id="res">
+                            <table class="table table-striped table-bordered">
+                                <tr><th>Batch</th><th>Course</th><th>Course Type</th><th>Qualification </th><th>Mark </th><th>Out of Mark</th><th>Quota</th><th>Certificate</th><th>Status</th></tr>  
+
+                                {%  for k in data  %}
+
+                                 
+                                 
+                                  <tr>  
+                                    <td>{{k.0}}</td>
+                                    <td>{{k.1}}</td>
+                                        <td>{{k.2}}</td>
+                                      
+                                       
+                                        <td>{{k.15}}</td>
+                                        <td>{{k.16}}</td>
+                                        <td>{{k.17}}</td>
+                                        <td>{{k.19}}</td>
+                                        <td><div style="margin: 5px;" ><a class="btn btn-success" href="{{k.18}}" target="_blank">Exam Certificate</a></div>
+                                        <div style="margin: 5px;"> <a class="btn btn-success"  href="{{k.20}}" target="_blank">SSLC Certificate</a>
+                                    </div>
+                                        {%if k.21 %}
+                                        <div style="margin: 5px;"> <a class="btn btn-success"  href="{{k.21}}" target="_blank">Income Certificate</a>
+                                        {% else %}
+                                            No Income certificate    
+                                        {% endif %}  </div>
+                                        {%if k.22 %}
+                                        <div style="margin: 5px;"><a class="btn btn-success"  href="{{k.22}}" target="_blank">Caste Certificate</a>
+                                        {% else %}
+                                            No caste certificate    
+                                        {% endif %}  </div></td>
+                                        <td><a  class="btn btn-success"  href="/view_candidate/{{k.23}}" class="btn btn-info">View  Details</a></td>
+                                  
+                                  </tr>
+                                    {% endfor  %}
+                              </table>
+
+
+                                    {% else %}
+                                    <div class="clearfix"> </div>
+                                    <div class="alert alert-success"> No Application</div>
+                                    {% endif %}
+        </table>
+                                    </div></div>
+
+            </div>
+            
+    </div>
+</div>
+<!--footer-->
+{% endblock %}

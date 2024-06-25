@@ -1,0 +1,196 @@
+
+{% extends "Master/header_adm.html" %}
+{% block content %}
+{% load static %}
+
+
+<div id="page-wrapper">
+<div class="main-page">
+<div class="forms">
+
+<h3 class="title1">Student List</h3>
+
+<div class="col-sm-12" style="margin-top: 10px;">
+<div class="form-title">
+<h4>View List :</h4>
+</div>
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<div class="alert alert-success"> {{message }}</div>
+{% endfor %}
+</ul>
+{% endif %}
+<form action="/student_list_filter/" method="post" id="myform" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="col-sm-3">
+<div class="form-group"> <label for="">University List</label>
+<select name="university"  id="university" class="form-control">
+<option value="">--Select--</option>
+{%  for k in data1  %}
+<option value="{{k.login_id}}">{{k.university}}</option>
+{% endfor  %}
+</select> </div></div>
+
+<div class="col-sm-3">
+<div class="form-group"> <label for="">College List</label>
+    <select name="college"  id="college" class="form-control">
+        <option value="">--Select--</option>
+        
+    </select> </div></div>
+<div class="col-sm-3">
+<div class="form-group"> <label for=""> Offered Course List</label>
+    <select name="course"  id="course" class="form-control">
+        <option value="">--Select--</option>
+        
+    </select> </div></div>
+    <div class="col-sm-3">
+        <div class="form-group"> <label for=""> Batch</label>
+            <select name="batch"  id="batch" class="form-control">
+                <option value="">--Select--</option>
+                
+            </select> </div></div>
+            <div class="clearfix"> </div>
+    <div class="col-sm-12" style="text-align:center" ><button style="margin-top:10px"  type="submit" class="btn btn-info">Submit</button></div>
+</form>
+   
+
+</div>
+<div class="row">
+<script>
+$("#university").change(function () {
+var university_login_id = $(this).val();
+
+$.ajax({
+
+url: '/display_college/',
+data: {
+'university_login_id': university_login_id
+},
+dataType: 'json',
+success: function (data) {
+
+
+let html_data = '<option value="">--Select--</option>';
+data.forEach(function (data) {
+html_data += `<option value="${data.login_id}">${data.college}</option>`
+});
+$("#college").html(html_data);
+
+
+
+}
+});
+
+});</script>
+
+<script>
+$("#college").change(function () {
+var college_login_id = $(this).val();
+
+$.ajax({
+
+url: '/display_offered_course_list/',
+data: {
+'college_login_id': college_login_id
+},
+
+success: function (data) {
+$("#course").html(data);
+
+
+
+
+
+
+}
+});
+
+});</script>
+<script>
+$("#course").change(function () {
+var course_id = $(this).val();
+
+$.ajax({
+
+url: '/display_batch_list/',
+data: {
+'course_id': course_id
+},
+
+success: function (data) {
+$("#batch").html(data);
+
+
+
+
+
+
+}
+});
+
+});</script> 
+<script src="{% static 'assets/Validation/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'assets/Validation/jquery_validate.js' %}"></script>
+<script src="{% static 'assets/Validation/additional_validate.js' %}"></script>
+<script>
+(function ($, W, D)
+{
+var JQUERY4U = {};
+JQUERY4U.UTIL =
+{
+setupFormValidation: function ()
+{
+$.validator.addMethod(
+"regex",
+function(value, element, regexp) {
+var check = false;
+return this.optional(element) || regexp.test(value);
+},
+"Not a valid Input."
+);
+
+//form validation rules
+$("#myform").validate({
+rules: {
+
+university: {
+
+required: true,
+
+},
+college: {
+
+required: true,
+},
+course: {
+
+required: true,
+},
+batch: {
+
+required: true,
+},
+},
+messages: {
+
+
+
+},
+submitHandler: function (form) {
+form.submit();
+}
+});
+}
+}
+//when the dom has loaded setup form validation rules
+$(D).ready(function ($) {
+JQUERY4U.UTIL.setupFormValidation();
+});
+})(jQuery, window, document);
+</script> 
+</div>
+</div>
+</div>
+<!--footer-->
+{% endblock %}

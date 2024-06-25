@@ -1,0 +1,295 @@
+
+{% extends "Master/header_adm.html" %}
+{% block content %}
+{% load static %}
+
+
+<div id="page-wrapper">
+<div class="main-page">
+<div class="forms">
+
+<h3 class="title1">University</h3>
+<div class="col-sm-12"  style="min-height:500px;">
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<div class="alert alert-success"> {{message }}</div>
+{% endfor %}
+</ul>
+{% endif %}
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+<div class="form-title">
+<h4>New University:</h4>
+</div>
+
+<div class="form-body">
+<form action="/update_university/{{data.university_id}}" method="post" id="myform" enctype="multipart/form-data">
+{% csrf_token %}
+
+
+<div class="col-sm-6">
+<div class="form-group"> <label for="">name of University</label>
+<input type="text" class="form-control" id="" value="{{data.university}}" placeholder="university" name="university"> </div>
+
+<div class="form-group">
+<label>Address</label>
+<textarea name="address"  class="form-control" >{{data.address}}</textarea>
+</div>
+<div class="form-group">
+<label>Email </label>
+<input  type="text" class="form-control" value="{{data.email}}"  name="email" >
+</div>
+
+
+
+<div class="form-group">
+  <label>Phone Number</label>
+  <input  class="form-control"   type="text" value="{{data.phone_number}}" name="phone_number" >
+</div>
+
+<div class="form-group">
+    <label>Place</label>
+    <input class="form-control" type="text" name="place" value="{{data.place}}" >
+</div>
+</div>
+<div class="col-sm-6">
+
+ 
+
+
+
+</div>
+<div class="col-sm-12"> <button type="submit" class="btn btn-default">Submit</button> </div></form>
+<link href="{% static 'assets/jquery/jquery-ui.css' %}" rel="stylesheet" type="text/css"  />
+
+<script type="text/javascript" src="{% static 'assets/jquery/jquery-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/jquery/jquery-ui.min.js' %}"></script>
+<script>
+$(function() {
+
+
+$( "#joining_date" ).datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true,
+changeYear: true,maxDate:'0', });
+$( "#dob" ).datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true,
+changeYear: true,maxDate:'-18y', });
+
+});</script>
+ <script>
+  $("#id_username").keyup(function () {
+      $('#uname').val("");
+     var username = $(this).val();
+     var count = username.length;
+     $('#cb').html("");
+     if(count>4)
+    {
+     $.ajax({
+           url: '/check_username/',
+           data: {
+               'username': username
+           },
+           dataType: 'json',
+           success: function (data) {
+                if (data.username_exists) {
+
+
+                  $('#cb').css('color','red');
+              $('#cb').html(data.error);
+
+                }
+                else{
+
+                  $('#cb').css('color','green');
+              $('#cb').html(data.success);
+              $('#uname').val(1);
+                }
+           }
+     });
+  }
+  });
+</script>
+<script src="{% static 'assets/Validation/jquery_validate.js' %}"></script>
+<script src="{% static 'assets/Validation/additional_validate.js' %}"></script>
+<script>
+(function ($, W, D)
+{
+var JQUERY4U = {};
+JQUERY4U.UTIL =
+{
+setupFormValidation: function ()
+{
+$.validator.addMethod(
+"regex",
+function(value, element, regexp) {
+var check = false;
+return this.optional(element) || regexp.test(value);
+},
+"Not a valid Input."
+);
+
+//form validation rules
+$("#myform").validate({
+rules: {
+
+  university: {
+						  required: true,
+						  regex : /^[A-Za-z ]+$/,
+						  minlength: 3,
+
+						},
+					
+						state: {
+						  required: true,
+
+
+						},
+						district: {
+						  required: true,
+
+
+						},
+						place: {
+						  required: true,
+						  regex : /^[A-Za-z ]+$/,
+
+						},
+						phone_number: {
+							required: true,
+							digits:true,
+							   minlength: 10,
+							   maxlength: 10,
+							   regex : /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/
+						},
+						address: {
+						  required: true,
+						  minlength: 3,
+
+						},
+						ownername: {
+						  required: true,
+						  minlength: 3,
+						  regex : /^[A-Za-z ]+$/,
+						},
+
+						email: {
+						 required: true,
+						 regex :  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+
+						},
+						username: {
+							required: true,
+							regex : /^[A-Za-z0-9@]+$/,
+							minlength: 5,
+							maxlength: 15,
+
+						},
+						password: {
+							required: true,
+							 regex : /^[A-Za-z0-9@#*]+$/,
+							 minlength: 5,
+							maxlength: 15,
+
+						},
+						cpassword: {
+							required: true,
+							   regex : /^[A-Za-z0-9@#*]+$/,
+							   minlength: 5,
+							  maxlength: 15,
+						  equalTo: "#password"
+
+						},
+					
+					  },
+					  messages: {
+
+						phone: "Please Enter Valid 10 digit Phone Number - Starting from 6, 7 or 8 or 9",
+
+		  username: "Please Enter Valid User Name(5-15 digit alphanumeric username",
+			password: "Please Enter Valid Password Name(5-15 digit alphanumeric  password  and @#* also allowed",
+			   cpassword: "Please Enter Valid Password Name(5-15 digit alphanumeric confirm password and same as above password and @#* also allowed",
+			   uname:"User name is not available",
+	  },
+submitHandler: function (form) {
+form.submit();
+}
+});
+}
+}
+//when the dom has loaded setup form validation rules
+$(D).ready(function ($) {
+JQUERY4U.UTIL.setupFormValidation();
+});
+})(jQuery, window, document);
+</script>
+
+<script>
+    $("#state").change(function () {
+          var state = $(this).val();
+
+          $.ajax({
+
+                url: '/display_district/',
+                data: {
+                    'state_id': state
+                },
+                dataType: 'json',
+                success: function (data) {
+
+
+                   let html_data = '<option value="">--Select--</option>';
+data.forEach(function (data) {
+html_data += `<option value="${data.district_id}">${data.district}</option>`
+});
+$("#district").html(html_data);
+
+
+
+                }
+          });
+
+       });</script>
+        <script>
+              $("#id_username").keyup(function () {
+                  $('#uname').val("");
+                 var username = $(this).val();
+                 var count = username.length;
+                 $('#cb').html("");
+                 if(count>4)
+                {
+                 $.ajax({
+                       url: '/check_username/',
+                       data: {
+                           'username': username
+                       },
+                       dataType: 'json',
+                       success: function (data) {
+                            if (data.username_exists) {
+
+
+                              $('#cb').css('color','red');
+                          $('#cb').html(data.error);
+
+                            }
+                            else{
+
+                              $('#cb').css('color','green');
+                          $('#cb').html(data.success);
+                          $('#uname').val(1);
+                            }
+                       }
+                 });
+              }
+              });
+           </script>
+</div>
+</div>
+</div>
+<div class="col-sm-6" style="margin-top: 10px;">
+
+</div>
+<div class="row">
+
+</div>
+</div>
+</div>
+<!--footer-->
+{% endblock %}

@@ -1,0 +1,54 @@
+
+{% extends "Master/header_adm.html" %}
+{% block content %}
+{% load static %}
+
+
+<div id="page-wrapper">
+    <div class="main-page">
+        <div class="forms">
+
+            <h3 class="title1">Student Details</h3>
+
+            <div class="col-sm-12" style="margin-top: 10px;">
+    <div class="form-title">
+                    <h4>View List :</h4>
+                </div>
+       
+                
+                {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                              <div class="alert alert-success"> {{message }}</div>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <table class="table table-bordered">
+                                <tr><th>Name</th><td>{{data.student_name}}</td></tr>
+                                <tr><th>Photo</th><td><img src="{{data.photo}}" width="100" height="100"></td></tr>
+                                <tr><th>Phone Number</th><td>{{data.phone_number }}</td></tr>
+                                <tr><th>Email - Id</th><td>{{data.Email}}</td></tr>
+                                <tr><th>Address</th><td>{{data.Address }}</td></tr>
+                                <tr><th>Place</th><td>{{data.place }}</td></tr>
+                                <tr><th>Adhaar Number</th><td>{{data.adhaar_no }}</td></tr>
+                                <tr><th>Blood Group</th><td>{{data.blood_group }}</td></tr>
+                                <tr><th>Caste</th><td>{{data.caste }}</td></tr>
+                                <tr><th>Caste Category</th><td>{{data.caste_category }}</td></tr>
+                                <tr><th>Date of Birth</th><td>{{data.date_of_birth }}</td></tr>
+                                <tr><th>Father Name</th><td>{{data.father_name  }}</td></tr>
+                                <tr><th>Mother Name</th><td>{{data.mother_name  }}</td></tr>
+                                <tr><th>Gender</th><td>{{data.gender }}</td></tr>
+                                <tr><th>Nationality</th><td>{{data.nationality  }}</td></tr>
+                                <tr><th>Permanant Address</th><td>{{data.permanant_address }}</td></tr>
+                                <tr><th>Religion</th><td>{{data.religion }}</td></tr>
+                               
+                            
+                              </table>
+                                    </div></div>
+
+            </div>
+            
+    </div>
+</div>
+<!--footer-->
+{% endblock %}

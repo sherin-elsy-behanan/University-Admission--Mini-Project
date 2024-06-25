@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>University Admission and Maintenance System</title>
+<link href="{% static 'assets/css/bootstrap.css'%}" rel='stylesheet' type='text/css' />
+<!-- jQuery (necessary JavaScript plugins) -->
+<script src="{% static 'assets/js/bootstrap.js'%}"></script>
+<!-- Custom Theme files -->
+<link href="{% static 'assets/css/style.css'%}" rel='stylesheet' type='text/css' />
+<!-- Custom Theme files -->
+<!--//theme-style-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="University Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script src="{% static 'assets/js/jquery.min.js'%}"></script>
+ <script src="{% static 'assets/js/bootstrap.js'%}"></script>
+
+</head>
+<body>
+<!-- banner -->
+<script src="{% static 'assets/js/responsiveslides.min.js'%}"></script>
+<script>  
+    $(function () {
+      $("#slider").responsiveSlides({
+      	auto: true,
+      	nav: true,
+      	speed: 500,
+        namespace: "callbacks",
+        pager: true,
+      });
+    });
+  </script>  
+
+
+
+
+     {% block content %}{% endblock %}
+     <!---->
+<div class="footer">
+    <div class="container">
+        <div class="ftr-sec">
+           
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!---->
+<div class="copywrite">
+    <div class="container">
+        <p>University Admission and Maintenance System</p>
+    </div>
+</div>
+<!---->
+</body>
+</html>
